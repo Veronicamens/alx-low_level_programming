@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(void)
+int main(void) - Adding a new line of code to an existing code
 {
 int n;
 int a[5];
