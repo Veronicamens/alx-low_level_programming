@@ -1,4 +1,4 @@
-0x08. C - Recursion
+
 Recursion is a programming technique that involves a function calling itself
 to solve a problem. In C programming language, recursion can be used to solve
 complex problems efficiently. Recursion can be implemented using base cases and
