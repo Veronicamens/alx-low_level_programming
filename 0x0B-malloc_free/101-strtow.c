@@ -12,12 +12,13 @@ char **strtow(char *str);
 
 	if (word_count == 0)
 
-	}	return NULL;
+	{	return NULL;
+
 	char **words = malloc((word_count + 1) * sizeof(char *));
 
-if (words == NULL)
+	if (words == NULL)
 
-}	return NULL;
+	}	return NULL;
 
 	int i = 0, start = 0, end = 0, word_index = 0;
 
