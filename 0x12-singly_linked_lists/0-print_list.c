@@ -3,41 +3,26 @@
 #include <stdlib.h>
 #include "lists.h"
 
-size_t print_list(const list_t *h)
+/**
+*print_linked_list - prints all the elements of a linked list
+*@head: pointer to the head of the list
+*Return: the number of nodes in the list
+*/
+size_t print_linked_list(const list_t *head)
 {
-size_t count = 0;
+int node_count = 0;
 
-while (h != NULL)
+while (head != NULL)
 {
-if (h->str != NULL)
-printf("[%u] %s\n", h->len, h->str);
-else
-printf("[0] (nil)\n");
-
-count++;
-h = h->next;
+if (head->str == NULL)
+{
+printf("[0] (NULL)\n");
+head = head->next;
+node_count++;
 }
-
-return (count);
+printf("[%d] %s\n", head->len, head->str);
+head = head->next;
+node_count++;
 }
-
-int main(void)
-{
-list_t *head = malloc(sizeof(list_t));
-head->str = "Hello";
-head->len = 5;
-head->next = malloc(sizeof(list_t));
-head->next->str = "World";
-head->next->len = 5;
-head->next->next = NULL;
-
-size_t count;
-
-count = print_list(head);
-printf("Number of nodes: %lu\n", (unsigned long)count);
-
-free(head->next);
-free(head);
-
-return (0);
+return (node_count);
 }
