@@ -1,61 +1,46 @@
 #include "main.h"
-
 /**
- * powX - raises b to p
- * @b: base
- * @p: power
- * Return: b the power of p
- */
-int powX(int b, int p)
-{
-	int prod = 1;
-
-	while (p > 0)
-	{
-		prod *= b;
-		p--;
-	}
-	return (prod);
-}
-
-/**
- * _len - length of a string
- * @s:string
- * Return: lenght of s
- */
-int _len(const char *s)
-{
-	int len = 0;
-
-	while (*s)
-	{
-		len++;
-		s++;
-	}
-	return (len);
-}
-/**
- * binary_to_uint - converts a binary number to an unsigned int
- * @b: input string
- * Return: unsigned decimal conversion, 0 if input is NULL
+ * binary_to_uint - converts a binary to an unsigned int
+ * @b: the binary number as a string
+ *
+ * Return: the converted value
  */
 unsigned int binary_to_uint(const char *b)
 {
-	int power;
-	int num = 0;
+unsigned int decimal = 0;
+int str_len = 0, base = 1;
 
-	if (!b)
-		return (0);
-	power = _len(b) - 1;
-	while (*b)
-	{
-		if (*b != '0' && *b != '1')
-			return (0);
+if (!check_valid_string(b))
+return (0);
 
-		if (*b == '1')
-			num += powX(2, power);
-		b++;
-		power--;
-	}
-	return (num);
+while (b[str_len] != '\0')
+str_len++;
+
+while (str_len)
+{
+decimal += ((b[str_len - 1] - '0') * base);
+base *= 2;
+str_len--;
+}
+return (decimal);
+}
+
+/**
+ * check_valid_string - checks if a string has only 0's and 1's
+ * @b: string to be checked
+ *
+ * Return: 1 if string is valid, 0 otherwise
+ */
+int check_valid_string(const char *b)
+{
+if (b == NULL)
+return (0);
+
+while (*b)
+{
+if (*b != '1' && *b != '0')
+return (0);
+b++;
+}
+return (1);
 }
