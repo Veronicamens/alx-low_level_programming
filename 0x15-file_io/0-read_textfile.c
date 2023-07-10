@@ -1,40 +1,44 @@
 #include "main.h"
-#include <stdlib.h>
 
 /**
-* read_textfile - Reads a text file and prints it to POSIX stdout.
-* @filename: A pointer to the name of the file.
-* @max_bytes: The maximum number of bytes the
-*             function should read and print.
-*
-* Return: If the function fails or filename is NULL - 0.
-*         O/w - the actual number of bytes the function can read and print.
+* read_textfile - reads a text file and prints it to the
+* POSIX standard output
+* @filename: pointer to filename
+* @letters: bytes to print
+* Return: actual bytes printed
 */
-ssize_t read_textfile(const char *filename, size_t max_bytes)
+ssize_t read_textfile(const char *filename, size_t letters)
 {
-ssize_t file_descriptor, bytes_read, bytes_written;
-char *buffer;
+register int fd, r, w;
+char *buffer = NULL;
 
-if (filename == NULL)
+if (!filename)
 return (0);
-
-buffer = malloc(sizeof(char) * max_bytes);
-if (buffer == NULL)
+buffer = malloc(letters + 1);
+if (!buffer)
 return (0);
-
-file_descriptor = open(filename, O_RDONLY);
-bytes_read = read(file_descriptor, buffer, max_bytes);
-bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
-
-if (file_descriptor == -1 || bytes_read == -1 || bytes_written == -1
-|| bytes_written != bytes_read)
+fd = open(filename, O_RDONLY);
+if (fd == -1)
 {
 free(buffer);
 return (0);
 }
-
+r = read(fd, buffer, letters);
+if (r == -1)
+{
 free(buffer);
-close(file_descriptor);
-
-return (bytes_written);
+close(fd);
+return (0);
+}
+buffer[letters] = '\0';
+w = write(STDOUT_FILENO, buffer, r);
+if (w == -1)
+{
+free(buffer);
+close(fd);
+return (0);
+}
+free(buffer);
+close(fd);
+return (w);
 }
